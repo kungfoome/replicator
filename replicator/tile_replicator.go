@@ -120,7 +120,7 @@ func (t TileReplicator) Replicate(config ApplicationConfig) error {
 			finalContents := string(contentsYaml)
 
 			for _, v := range jobTypes {
-				finalContents = t.replaceProperty(string(finalContents), v.Name, t.formatName(config))
+				finalContents = t.replaceProperty(finalContents, v.Name, t.formatName(config))
 			}
 
 			_, err = dstFile.Write([]byte(finalContents))
@@ -163,7 +163,7 @@ func (TileReplicator) findJobTypes(j []byte) ([]JobType, error) {
 
 func (t TileReplicator) replaceProperty(metadata string, name string, suffix string) string {
 	newPropertyName := fmt.Sprintf("%s_%s", name, suffix)
-	t.logger.Printf("%s => %s", name, newPropertyName)
+	t.logger.Printf("updating job: %s => %s", name, newPropertyName)
 
 	return strings.Replace(metadata, name, newPropertyName, -1)
 }
